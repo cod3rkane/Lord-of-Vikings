@@ -12,7 +12,7 @@ include_directories(${GLFW_INCLUDE_DIRS})
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-set(SOURCE_FILES src/main.cpp)
+set(SOURCE_FILES src/main.cpp src/util/Shader.cpp src/util/Shader.h)
 add_executable(Lov ${SOURCE_FILES})
 
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})

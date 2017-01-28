@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "util/Shader.h"
 
 int main() {
     GLFWwindow* window;
@@ -17,6 +18,8 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+
+    Shader myShader;
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
