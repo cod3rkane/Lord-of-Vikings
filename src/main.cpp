@@ -20,6 +20,7 @@ int main() {
     glfwMakeContextCurrent(window);
 
     Shader myShader;
+    myShader.loadFiles("shader.vert", "shader.frag");
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);

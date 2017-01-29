@@ -9,7 +9,7 @@
 typedef struct Shader {
     GLuint programID;
 
-    void loadFiles();
+    void loadFiles(const GLchar *vertexPath, const GLchar *fragmentPath);
     void useProgram();
     ~Shader();
 } Shader;
