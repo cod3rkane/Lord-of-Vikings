@@ -3,3 +3,5 @@ CMakeFiles/*
 Lov
 Makefile
 cmake_install.cmake
+.idea/*
+Lov.cbp
