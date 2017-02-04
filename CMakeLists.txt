@@ -15,7 +15,10 @@ include_directories(${GLEW_INCLUDE_DIRS})
 set(SOURCE_FILES src/main.cpp src/util/Shader.cpp src/util/Shader.h)
 add_executable(Lov ${SOURCE_FILES})
 
+include_directories(/src/local/includes/SOIL)
+link_directories(/src/local/lib)
+
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
 target_link_libraries(Lov ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY}
-    ${GLUT_LIBRARY})
+    ${GLUT_LIBRARY} SOIL)
 
