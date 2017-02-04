@@ -51,17 +51,23 @@ int main() {
     Shader myShader;
     myShader.loadFiles("shader.vert", "shader.frag");
 
+    static const GLfloat colorData[] = {
+        0.0f, 0.3f, 0.8f, 0.2f
+    };
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0, 0.0, 0.0, 1.0f);
-
+        
+        myShader.useProgram();
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-        myShader.useProgram();
+        GLint colorLocation = glGetUniformLocation(myShader.programID, "frameBufferColor");
+        glUniform4fv(colorLocation, 1, colorData);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glDisableVertexAttribArray(0);
