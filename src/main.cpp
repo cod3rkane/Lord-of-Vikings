@@ -49,7 +49,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
     Shader myShader;
-    myShader.loadFiles("shader.vert", "shader.frag");
+    myShader.loadFiles("assets/shaders/shader.vert", "assets/shaders/shader.frag");
 
     static const GLfloat colorData[] = {
         0.0f, 0.3f, 0.8f, 0.2f
