@@ -38,7 +38,7 @@ int main() {
     glGenVertexArrays(1, &vertexArrayID);
     glBindVertexArray(vertexArrayID);
 
-    static const GLfloat vertex_buffer_data[] = {
+    const GLfloat vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
         0.0f, 1.0f, 0.0f
@@ -51,7 +51,7 @@ int main() {
     Shader myShader;
     myShader.loadFiles("assets/shaders/shader.vert", "assets/shaders/shader.frag");
 
-    static const GLfloat colorData[] = {
+    const GLfloat colorData[] = {
         0.0f, 0.3f, 0.8f, 0.2f
     };
 
