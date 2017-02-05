@@ -43,15 +43,15 @@ int main() {
     glModel.storeShader(&myShader);
 
     const GLfloat vertex_buffer_data[] = {
-            0.5f, 0.5f, 0.0f,
-            0.5f, -0.5f, 0.0,
-            -0.5f, -0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f
+            -0.2f, 0.2f, 0.0f,
+            0.0f, 0.2f, 0.0f,
+            -0.2f, -0.2f, 0.0f,
+            0.0f, -0.2f, 0.0
     };
 
     const GLuint indices[] = {
-            0, 1, 3,
-            1, 2, 3
+            0, 2, 1,
+            2, 3, 1
     };
 
     const GLfloat colorData[] = {
@@ -62,10 +62,10 @@ int main() {
     };
 
     const GLfloat textureData[] = {
+            0.0f, 1.0f,
             1.0f, 1.0f,
-            1.0f, 0.0f,
             0.0f, 0.0f,
-            0.0f, 1.0f
+            1.0f, 0.0f
     };
 
 
@@ -75,8 +75,8 @@ int main() {
     glModel.storeIndicesData(indices, sizeof(indices));
 
     int imageW, imageH;
-    unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGBA);
-    glModel.textureImage(wallTexture, imageW, imageH, GL_RGBA);
+    unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    glModel.textureImage(wallTexture, imageW, imageH, GL_RGB);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
