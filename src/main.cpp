@@ -48,9 +48,9 @@ int main() {
     };
 
     const GLfloat colorData[] = {
-        0.0f, 0.3f, 0.8f,
-        0.0f, 0.3f, 0.8f,
-        0.0f, 0.3f, 0.8f,
+        0.2f, 0.3f, 1.0f,
+        1.0f, 0.8f, 0.8f,
+        0.0f, 1.0f, 1.0f,
     };
 
     glModel.storePositionData(vertex_buffer_data, sizeof(vertex_buffer_data));
