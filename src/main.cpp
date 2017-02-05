@@ -56,10 +56,10 @@ int main() {
     glModel.storeShader(&myShader);
 
     const GLfloat vertex_buffer_data[] = {
-            -0.2f, 0.2f, 0.0f,
-            0.0f, 0.2f, 0.0f,
-            -0.2f, -0.2f, 0.0f,
-            0.0f, -0.2f, 0.0
+            -1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            -1.0f, -1.0f, 0.0f,
+            0.0f, -1.0f, 0.0
     };
 
     const GLuint indices[] = {
@@ -81,7 +81,7 @@ int main() {
             1.0f, 0.0f
     };
 
-    Entity entity(0, vec3(0, 0, 0), 0, 0, 0, 1);
+    Entity entity(0, vec3(-2.5f, 0, 0), 0, 0, 0, 0.2);
 
     glModel.storePositionData(vertex_buffer_data, sizeof(vertex_buffer_data));
     glModel.storeColorData(colorData, sizeof(colorData));
