@@ -75,8 +75,8 @@ int main() {
     glModel.storeIndicesData(indices, sizeof(indices));
 
     int imageW, imageH;
-    unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    glModel.textureImage(wallTexture, imageW, imageH, GL_RGB);
+    unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGBA);
+    glModel.textureImage(wallTexture, imageW, imageH, GL_RGBA);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

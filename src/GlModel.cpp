@@ -69,18 +69,27 @@ void GlModel::textureImage(unsigned char *image, int width, int heigth, GLenum f
     glGenTextures(1, &this->texture);
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    // Set our texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Set texture filtering
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, heigth, 0, format, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     SOIL_free_image_data(image);
-    glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void GlModel::render() {
+    glEnable(GL_DEPTH);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     this->setup();
 
     this->shader->useProgram();
@@ -92,15 +101,24 @@ void GlModel::render() {
     }
 
     glBindVertexArray(this->VAO);
-    glEnable(GL_DEPTH_TEST);
     glDrawArrays(GL_TRIANGLES, 0, (this->positionDataLength / sizeof(GLfloat)) / 3);
-    glDisable(GL_DEPTH_TEST);
 
     glDisableVertexAttribArray(0);
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glDisable(GL_DEPTH);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 }
 
 void GlModel::renderElements() {
+    glEnable(GL_DEPTH);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     this->setup();
 
     this->shader->useProgram();
@@ -112,12 +130,15 @@ void GlModel::renderElements() {
     }
 
     glBindVertexArray(this->VAO);
-    glEnable(GL_DEPTH_TEST);
     glDrawElements(GL_TRIANGLES, (this->indicesDataLength / sizeof(GLuint)), GL_UNSIGNED_INT, 0);
-    glDisable(GL_DEPTH_TEST);
 
     glDisableVertexAttribArray(0);
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glDisable(GL_DEPTH);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 }
 
 GlModel::~GlModel() {
