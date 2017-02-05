@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(Lov)
 
+set(CMAKE_CXX_STANDARD 14)
+
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -12,7 +14,7 @@ include_directories(${GLFW_INCLUDE_DIRS})
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-set(SOURCE_FILES src/main.cpp src/util/Shader.cpp src/util/Shader.h)
+set(SOURCE_FILES src/main.cpp src/util/Shader.cpp src/util/Shader.h src/GlModel.cpp src/GlModel.h)
 add_executable(Lov ${SOURCE_FILES})
 
 include_directories(/src/local/includes/SOIL)
