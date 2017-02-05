@@ -75,14 +75,14 @@ int main() {
     glModel.storeIndicesData(indices, sizeof(indices));
 
     int imageW, imageH;
-    unsigned char *wallTexture = SOIL_load_image("assets/images/wall.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    glModel.textureImage(wallTexture, imageW, imageH, GL_RGB);
+    unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGBA);
+    glModel.textureImage(wallTexture, imageW, imageH, GL_RGBA);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.0, 0.0, 0.0, 1.0f);
 
         glModel.renderElements();
 
