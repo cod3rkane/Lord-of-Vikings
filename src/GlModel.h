@@ -3,8 +3,6 @@
 
 #include <GL/glew.h>
 #include "util/Shader.h"
-#include <vector>
-#include <glm/ext.hpp>
 
 typedef struct GlModel {
 private:

@@ -42,9 +42,9 @@ int main() {
     glModel.storeShader(&myShader);
 
     const GLfloat vertex_buffer_data[] = {
-            -0.02f, -0.02f, 0.0f,
-            0.02f, -0.02f, 0.0f,
-            0.0f, 0.02f, 0.0f
+            -1.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f
     };
 
     const GLfloat colorData[] = {
