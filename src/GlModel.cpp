@@ -129,6 +129,32 @@ void GlModel::renderElements() {
         glUniform1i(glGetUniformLocation(this->shader->programID, "ourTexture"), 0);
     }
 
+    this->storeUniformMatrixLocation4fv(
+            this->getUniformLocation("transform"),
+            this->createTransformationMatrix(
+                    this->entity->getPosition(),
+                    this->entity->getRotX(),
+                    this->entity->getRotY(),
+                    this->entity->getRotZ(),
+                    this->entity->getScale()
+            )
+    );
+
+    this->storeUniformMatrixLocation4fv(
+            this->getUniformLocation("view"),
+            this->viewMatrix
+    );
+
+    this->storeUniformMatrixLocation4fv(
+            this->getUniformLocation("projection"),
+            glm::perspective(
+                    this->projectionMatrix->fov,
+                    this->projectionMatrix->aspectRatio,
+                    this->projectionMatrix->nearPlane,
+                    this->projectionMatrix->farPlane
+            )
+    );
+
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, (this->indicesDataLength / sizeof(GLuint)), GL_UNSIGNED_INT, 0);
 
@@ -145,4 +171,38 @@ GlModel::~GlModel() {
     glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(3, this->VBO);
     glDeleteBuffers(1, &this->EBO);
+}
+
+void GlModel::setProjectionMatrix(ProjectionMatrix *projectionMatrix) {
+    GlModel::projectionMatrix = projectionMatrix;
+}
+
+void GlModel::storeUniformMatrixLocation4fv(GLint location, glm::mat4 value) {
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+}
+
+GLint GlModel::getUniformLocation(const char *uniform) {
+    return glGetUniformLocation(this->shader->programID, uniform);
+}
+
+const glm::mat4 &GlModel::getViewMatrix() const {
+    return viewMatrix;
+}
+
+void GlModel::setViewMatrix(const glm::mat4 &viewMatrix) {
+    GlModel::viewMatrix = viewMatrix;
+}
+
+void GlModel::setEntity(Entity *entity) {
+    GlModel::entity = entity;
+}
+
+glm::mat4 GlModel::createTransformationMatrix(glm::vec3 translation, float rx, float ry, float rz, float scale) {
+    glm::mat4 matrix;
+    matrix = glm::translate(matrix, translation);
+    matrix = glm::rotate(matrix, glm::radians(rx), glm::vec3(1.0f, 0.0f, 0.0f));
+    matrix = glm::rotate(matrix, glm::radians(ry), glm::vec3(0.0f, 1.0f, 0.0f));
+    matrix = glm::rotate(matrix, glm::radians(rz), glm::vec3(0.0f, 0.0f, 1.0f));
+    matrix = glm::scale(matrix, glm::vec3(scale, scale, scale));
+    return matrix;
 }

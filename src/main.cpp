@@ -1,9 +1,17 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "util/ProjectionMatrix.h"
 #include "util/Shader.h"
 #include "GlModel.h"
+#include "legacy/Camera.h"
+#include "legacy/Entity.h"
 #include <SOIL/SOIL.h>
+
+ProjectionMatrix projectionMatrix = {.fov = 45.0f, .nearPlane = 0.1f, .farPlane = 100.0f};
+GLFWmonitor* monitor;
+const GLFWvidmode* mode;
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int main() {
     GLFWwindow* window;
@@ -18,7 +26,10 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-    window = glfwCreateWindow(1280, 720, "Lord of Vikings", NULL, NULL);
+    monitor = glfwGetPrimaryMonitor();
+    mode = glfwGetVideoMode(monitor);
+
+    window = glfwCreateWindow(mode->width, mode->height, "Lord of Vikings", NULL, NULL);
 
     if (!window) {
         std::cout << "Window error, :(" << std::endl;
@@ -35,6 +46,8 @@ int main() {
     glMatrixMode(GL_MODELVIEW);
 
     // OpenGL Code
+
+    projectionMatrix.aspectRatio = (GLfloat)mode->width / mode->height;
 
     Shader myShader;
     myShader.loadFiles("assets/shaders/shader.vert", "assets/shaders/shader.frag");
@@ -68,11 +81,15 @@ int main() {
             1.0f, 0.0f
     };
 
+    Entity entity(0, vec3(0, 0, 0), 0, 0, 0, 1);
 
     glModel.storePositionData(vertex_buffer_data, sizeof(vertex_buffer_data));
     glModel.storeColorData(colorData, sizeof(colorData));
     glModel.storeTextureData(textureData, sizeof(textureData));
     glModel.storeIndicesData(indices, sizeof(indices));
+    glModel.setViewMatrix(camera.GetViewMatrix());
+    glModel.setProjectionMatrix(&projectionMatrix);
+    glModel.setEntity(&entity);
 
     int imageW, imageH;
     unsigned char *wallTexture = SOIL_load_image("assets/images/ninja/idle.PNG", &imageW, &imageH, 0, SOIL_LOAD_RGBA);

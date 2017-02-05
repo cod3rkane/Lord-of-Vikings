@@ -14,7 +14,18 @@ include_directories(${GLFW_INCLUDE_DIRS})
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-set(SOURCE_FILES src/main.cpp src/util/Shader.cpp src/util/Shader.h src/GlModel.cpp src/GlModel.h)
+set(SOURCE_FILES
+        src/main.cpp
+        src/util/Shader.cpp
+        src/util/Shader.h
+        src/GlModel.cpp
+        src/GlModel.h
+        src/util/ProjectionMatrix.h
+        src/legacy/Camera.cpp
+        src/legacy/Camera.h
+        src/legacy/Entity.cpp
+        src/legacy/Entity.h
+        )
 add_executable(Lov ${SOURCE_FILES})
 
 include_directories(/src/local/includes/SOIL)
