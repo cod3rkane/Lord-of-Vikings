@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "util/Shader.h"
 #include "GlModel.h"
+#include <SOIL/SOIL.h>
 
 int main() {
     GLFWwindow* window;
@@ -42,19 +43,40 @@ int main() {
     glModel.storeShader(&myShader);
 
     const GLfloat vertex_buffer_data[] = {
-            -1.0f, -1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f
+            0.5f, 0.5f, 0.0f,
+            0.5f, -0.5f, 0.0,
+            -0.5f, -0.5f, 0.0f,
+            -0.5f, 0.5f, 0.0f
+    };
+
+    const GLuint indices[] = {
+            0, 1, 3,
+            1, 2, 3
     };
 
     const GLfloat colorData[] = {
-        0.2f, 0.3f, 1.0f,
-        1.0f, 0.8f, 0.8f,
-        0.0f, 1.0f, 1.0f,
+            0.2f, 0.3f, 1.0f,
+            1.0f, 0.8f, 0.8f,
+            0.0f, 1.0f, 1.0f,
+            0.0f, 1.0f, 1.0f
     };
+
+    const GLfloat textureData[] = {
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f
+    };
+
 
     glModel.storePositionData(vertex_buffer_data, sizeof(vertex_buffer_data));
     glModel.storeColorData(colorData, sizeof(colorData));
+    glModel.storeTextureData(textureData, sizeof(textureData));
+    glModel.storeIndicesData(indices, sizeof(indices));
+
+    int imageW, imageH;
+    unsigned char *wallTexture = SOIL_load_image("assets/images/wall.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    glModel.textureImage(wallTexture, imageW, imageH, GL_RGB);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -62,7 +84,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0, 0.0, 0.0, 1.0f);
 
-        glModel.render();
+        glModel.renderElements();
 
         glfwSwapBuffers(window);
     }
