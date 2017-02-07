@@ -30,6 +30,7 @@ int main() {
     mode = glfwGetVideoMode(monitor);
 
     window = glfwCreateWindow(mode->width, mode->height, "Lord of Vikings", NULL, NULL);
+    printf("Window width: %d window height: %d \n", mode->width, mode->height);
 
     if (!window) {
         std::cout << "Window error, :(" << std::endl;
@@ -42,7 +43,7 @@ int main() {
     glewInit();
 
     glMatrixMode(GL_PROJECTION);
-    glViewport(0, 0, 1280, 720);
+    glViewport(0, 0, mode->width, mode->height);
     glMatrixMode(GL_MODELVIEW);
 
     // OpenGL Code
@@ -102,6 +103,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glModel.renderElements();
+        entity.increasePosition(0.002f, 0.002f, 0.0f);
 
         glfwSwapBuffers(window);
     }
