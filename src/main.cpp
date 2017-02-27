@@ -6,7 +6,7 @@
 #include "GlModel.h"
 #include "legacy/Camera.h"
 #include "legacy/Entity.h"
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 ProjectionMatrix projectionMatrix = {.fov = 45.0f, .nearPlane = 0.1f, .farPlane = 100.0f};
 GLFWmonitor* monitor;
@@ -21,7 +21,7 @@ int main() {
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
