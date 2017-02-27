@@ -82,7 +82,7 @@ int main() {
             1.0f, 0.0f
     };
 
-    Entity entity(0, vec3(-2.5f, 0, 0), 0, 0, 0, 0.2);
+    Entity entity(0, vec3(0, 0, 0), 0, 0, 0, 0.1f);
 
     glModel.storePositionData(vertex_buffer_data, sizeof(vertex_buffer_data));
     glModel.storeColorData(colorData, sizeof(colorData));
@@ -103,7 +103,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glModel.renderElements();
-        entity.increasePosition(0.002f, 0.002f, 0.0f);
+        entity.increasePosition(0.0f, 0.0f, 0.0f);
 
         glfwSwapBuffers(window);
     }
