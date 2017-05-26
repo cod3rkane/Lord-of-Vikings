@@ -6,7 +6,7 @@
 #include "GlModel.h"
 #include "legacy/Camera.h"
 #include "legacy/Entity.h"
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 
 ProjectionMatrix projectionMatrix = {.fov = 45.0f, .nearPlane = 0.1f, .farPlane = 100.0f};
 GLFWmonitor* monitor;

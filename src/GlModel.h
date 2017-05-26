@@ -2,7 +2,7 @@
 #define LOV_GLMODEL_H
 
 #include <GL/glew.h>
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 #include <glm/ext.hpp>
 #include "util/Shader.h"
 #include "util/ProjectionMatrix.h"
