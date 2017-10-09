@@ -23,18 +23,10 @@ static void on_realize(GtkGLArea *glarea) {
 	// Enable depth buffer:
 	gtk_gl_area_set_has_depth_buffer(glarea, TRUE);
 
-    // render things...
-    GError* err = nullptr;
-
 	// Get frame clock:
     GdkGLContext *glcontext = gtk_gl_area_get_context(glarea);
 	GdkWindow *glwindow = gdk_gl_context_get_window(glcontext);
-    GdkGLContext *context = gdk_window_create_gl_context(glwindow, &err);
     GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
-    
-    gdk_gl_context_set_required_version(context, OPENGL_MAJOR, OPENGL_MINOR);
-
-    gdk_gl_context_make_current(context);
 
     // Print version info:
 	const GLubyte* renderer = glGetString(GL_RENDERER);
@@ -66,7 +58,20 @@ static void connect_window_signals(GtkWidget *window) {
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 }
 
+static GdkGLContext* creating_context(GtkGLArea *glarea) {
+    // render things...
+    GError* err = nullptr;
+
+    GdkWindow *window = gtk_widget_get_window(glarea);
+    GdkGLContext *context = gdk_window_create_gl_context(window, &err);
+
+    return context;
+}
+
 static void connect_glarea_signals(GtkWidget *glarea) {
+    gtk_widget_add_events(glarea, 0);
+    g_signal_connect(glarea, "create-context", G_CALLBACK(creating_context), NULL);
+
     gtk_widget_add_events(glarea, 0);
     g_signal_connect(glarea, "realize", G_CALLBACK(on_realize), NULL);
 
