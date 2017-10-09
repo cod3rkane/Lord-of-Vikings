@@ -9,12 +9,8 @@
 #include "legacy/Camera.h"
 #include "legacy/Entity.h"
 
-// Hold init data for GTK signals:
-struct signal {
-	const gchar	*signal;
-	GCallback	 handler;
-	GdkEventMask	 mask;
-};
+#define OPENGL_MAJOR 4
+#define OPENGL_MINOR 5
 
 static void on_realize(GtkGLArea *glarea) {
 	// Make current:
@@ -24,21 +20,27 @@ static void on_realize(GtkGLArea *glarea) {
 	glewExperimental = GL_TRUE;
 	glewInit();
 
-	// Print version info:
-	const GLubyte* renderer = glGetString(GL_RENDERER);
-	const GLubyte* version = glGetString(GL_VERSION);
-	printf("Renderer: %s\n", renderer);
-	printf("OpenGL version supported %s\n", version);
-
 	// Enable depth buffer:
 	gtk_gl_area_set_has_depth_buffer(glarea, TRUE);
 
     // render things...
+    GError* err = nullptr;
 
 	// Get frame clock:
-	GdkGLContext *glcontext = gtk_gl_area_get_context(glarea);
+    GdkGLContext *glcontext = gtk_gl_area_get_context(glarea);
 	GdkWindow *glwindow = gdk_gl_context_get_window(glcontext);
-	GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
+    GdkGLContext *context = gdk_window_create_gl_context(glwindow, &err);
+    GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
+    
+    gdk_gl_context_set_required_version(context, OPENGL_MAJOR, OPENGL_MINOR);
+
+    gdk_gl_context_make_current(context);
+
+    // Print version info:
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+	const GLubyte* version = glGetString(GL_VERSION);
+	printf("Renderer: %s\n", renderer);
+	printf("OpenGL version supported %s\n", version);
 
 	// Connect update signal:
 	g_signal_connect_swapped(frame_clock, "update", G_CALLBACK(gtk_gl_area_queue_render), glarea);
