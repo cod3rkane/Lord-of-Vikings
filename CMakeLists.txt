@@ -8,13 +8,18 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 
-find_package(glfw3 3.2 REQUIRED)
+# find_package(glfw3 3.2 REQUIRED)
 
-pkg_search_module(GLFW REQUIRED glfw3)
-include_directories(${GLFW_INCLUDE_DIRS})
+# pkg_search_module(GLFW REQUIRED glfw3)
+# include_directories(${GLFW_INCLUDE_DIRS})
 
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
+
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+add_definitions(${GTK3_CFLAGS_OTHER})
 
 include_directories(/usr/local/include/SOIL)
 link_directories(/usr/local/lib)
@@ -34,6 +39,6 @@ set(SOURCE_FILES
 add_executable(Lov ${SOURCE_FILES})
 
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
-target_link_libraries(Lov ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL
-        ${FREETYPE_LIBRARIES} ${GLUT_LIBRARY})
+target_link_libraries(Lov ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL
+        ${FREETYPE_LIBRARIES} ${GLUT_LIBRARY} ${GTK3_LIBRARIES})
 
