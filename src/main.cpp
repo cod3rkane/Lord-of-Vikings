@@ -42,6 +42,12 @@ int main() {
     glewExperimental = GL_TRUE;
     glewInit();
 
+    // Print version info:
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+	const GLubyte* version = glGetString(GL_VERSION);
+	printf("Renderer: %s\n", renderer);
+	printf("OpenGL version supported %s\n", version);
+
     glMatrixMode(GL_PROJECTION);
     glViewport(0, 0, mode->width, mode->height);
     glMatrixMode(GL_MODELVIEW);
